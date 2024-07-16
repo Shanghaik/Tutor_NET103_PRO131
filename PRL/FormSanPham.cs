@@ -120,10 +120,13 @@ namespace PRL
             btnMua.Location = new Point(442, 263);
             btnMua.Size = new Size(83, 39); btnMua.Text = "MUA";
             btnMua.MouseClick += BtnMua_MouseClick; // Tạo sự kiện cho nó khi ấn vào nút mua
-
+            // Tạo thêm 1 textbox để nhập số lượng
+            TextBox tbSoLuong = new TextBox(); tbSoLuong.PlaceholderText = "Nhập";
+            tbSoLuong.Location = new Point(332, 268); tbSoLuong.Size = new Size(83, 34);
+            tbSoLuong.Name = "tbSoLuong";
             p.Controls.Add(ptb); p.Controls.Add(lbTen); p.Controls.Add(lbTenValue); p.Controls.Add(lbGia);
             p.Controls.Add(lbGiaValue); p.Controls.Add(lbSL); p.Controls.Add(lbSLValue); p.Controls.Add(lbMua);
-            p.Controls.Add(btnMua);
+            p.Controls.Add(btnMua); p.Controls.Add(tbSoLuong);
             return p;
         }
 
@@ -135,7 +138,8 @@ namespace PRL
             // Ở đoạn code trên ta đã gán tên panel = id của sản phẩm
             // => Để lấy được id của sản phẩm cần mua, ta chỉ cần lấy name của panel
             Panel p = (Panel)b.Parent; // p là panel chứa nút đó
-            MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là "+ p.Name); // Hiển thị tạm ID ra
+            TextBox t = p.Controls["tbSoLuong"] as TextBox;
+            MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là "+ p.Name + "Với số lượng là: " + t.Text); // Hiển thị tạm ID ra
         }
 
         private void lb_next_Click(object sender, EventArgs e) // tăng trang lên
