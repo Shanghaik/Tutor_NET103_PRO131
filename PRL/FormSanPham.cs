@@ -12,20 +12,20 @@ namespace PRL
 {
     public partial class FormSanPham : Form
     {
-        List<SanPham> sanphams = new List<SanPham>()
+        List<SanPham> sanphams = new List<SanPham>() // List này có thể lấy từu file/db
         {
             new SanPham {Ten = "SP1", Gia = 15000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP2", Gia = 21000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+            new SanPham {Ten = "SP2", Gia = 21000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
             new SanPham {Ten = "SP3", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
             new SanPham {Ten = "SP4", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP5", Gia = 41000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+            new SanPham {Ten = "SP5", Gia = 41000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
             new SanPham {Ten = "SP6", Gia = 13000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
             new SanPham {Ten = "SP7", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP8", Gia = 130400, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+            new SanPham {Ten = "SP8", Gia = 130400, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
             new SanPham {Ten = "SP9", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
             new SanPham {Ten = "SP10", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
             new SanPham {Ten = "SP11", Gia = 103300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP12", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+            new SanPham {Ten = "SP12", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\SK1_GENAI.png"},
             new SanPham {Ten = "SP13", Gia = 331000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"}
         };
 
@@ -33,10 +33,11 @@ namespace PRL
         {
             InitializeComponent();
         }
-        public void LoadSPToPanel(int page)
+        public void LoadSPToPanel(int page) // Load từng trang sản phẩm vào TableLayoutPanel
         {
             tlp_SanPham.Controls.Clear();
-            int numberOfPage = (int)Math.Ceiling((decimal)sanphams.Count / 4);// số trang ứng theo só lượng sản phẩm
+            int numberOfPage = (int)Math.Ceiling((decimal)sanphams.Count / 4);// số trang ứng theo số lượng sản phẩm
+            // Phương thức Ceiling sẽ lấy số nguyên nhỏ nhất lớn hơn hoặc = số thập phân chia ra từ kết quả, vd 13/4 = 3.33333 => 4
             if (page < 1 || page > numberOfPage) return; // nếu số trang vượt quá số trang có => bỏ qua
             else
             { // Lấy số sản phẩm theo số trang 
@@ -44,7 +45,8 @@ namespace PRL
                 {
                     Panel s1 = CreatePanelSP(sanphams[page * 4 - 4]);
                     tlp_SanPham.Controls.Add(s1, 0, 0);
-                }// Check sản phẩm thêm vào Panel không bị lớn hơn sản phẩm cuối
+                }// Check sản phẩm thêm vào Panel không bị lớn hơn sản phẩm cuối vd đang ở trang số 4 
+                // các sp sẽ là 12 13 14 15 nhưng ta chỉ có 13 sản phẩm thôi thì những sản phẩm nào vượt quá sẽ không được gen ra
                 if (page * 4 - 3 < sanphams.Count)
                 {
                     Panel s2 = CreatePanelSP(sanphams[page * 4 - 3]);
@@ -83,12 +85,14 @@ namespace PRL
             //tlp_SanPham.Controls.Add(y, 0, 1);
             //tlp_SanPham.Controls.Add(z, 1, 0);
             //tlp_SanPham.Controls.Add(t, 1, 1);
-            LoadSPToPanel(2);
+            tlp_SanPham.Controls.Clear();
+            LoadSPToPanel(Convert.ToInt32(lb_page.Text));
         }
         public Panel CreatePanelSP(SanPham sp) // Mỗi sản phẩm sẽ được tạo ra và nằm trong 1 panel,
                                                // panel này sẽ được thêm vào tablelayoutpanel, // Phương thức này trả về cả 1 Panel
         {
             Panel p = new Panel(); p.Size = new Size(555, 360);
+            p.Name = "ABC";
             PictureBox ptb = new PictureBox(); ptb.Size = new Size(297, 287);
             ptb.Image = Image.FromFile(sp.ImgURL); // gán hình ảnh của picturebox = URL ảnh của sản phẩm
             ptb.Location = new Point(14, 12);
