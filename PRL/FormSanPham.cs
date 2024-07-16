@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BUS.Services;
+using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,25 +14,28 @@ namespace PRL
 {
     public partial class FormSanPham : Form
     {
-        List<SanPham> sanphams = new List<SanPham>() // List này có thể lấy từu file/db
-        {
-            new SanPham {Ten = "SP1", Gia = 15000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP2", Gia = 21000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
-            new SanPham {Ten = "SP3", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP4", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP5", Gia = 41000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
-            new SanPham {Ten = "SP6", Gia = 13000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP7", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP8", Gia = 130400, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
-            new SanPham {Ten = "SP9", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP10", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP11", Gia = 103300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
-            new SanPham {Ten = "SP12", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\SK1_GENAI.png"},
-            new SanPham {Ten = "SP13", Gia = 331000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"}
-        };
-
+        //List<SanPham> sanphams = new List<SanPham>() // List này có thể lấy từu file/db
+        //{
+        //    new SanPham {Ten = "SP1", Gia = 15000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP2", Gia = 21000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
+        //    new SanPham {Ten = "SP3", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP4", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP5", Gia = 41000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
+        //    new SanPham {Ten = "SP6", Gia = 13000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP7", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP8", Gia = 130400, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Logo XLDL.png"},
+        //    new SanPham {Ten = "SP9", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP10", Gia = 1000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP11", Gia = 103300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"},
+        //    new SanPham {Ten = "SP12", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\SK1_GENAI.png"},
+        //    new SanPham {Ten = "SP13", Gia = 331000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"}
+        //};
+        List<SanPham> sanphams; // Tạo ra list SP
+        SanPhamServices _services; // Gọi services
         public FormSanPham()
         {
+            _services = new SanPhamServices(); // Thêm cái này
+            sanphams = _services.GetAll(); // thêm cả cái này
             InitializeComponent();
         }
         public void LoadSPToPanel(int page) // Load từng trang sản phẩm vào TableLayoutPanel
@@ -94,7 +99,7 @@ namespace PRL
             Panel p = new Panel(); p.Size = new Size(555, 360);
             p.Name = "ABC";
             PictureBox ptb = new PictureBox(); ptb.Size = new Size(297, 287);
-            ptb.Image = Image.FromFile(sp.ImgURL); // gán hình ảnh của picturebox = URL ảnh của sản phẩm
+            ptb.Image = Image.FromFile(sp.Mota); // gán hình ảnh của picturebox = URL ảnh của sản phẩm
             ptb.Location = new Point(14, 12);
             ptb.SizeMode = PictureBoxSizeMode.StretchImage;
             Label lbTen = new Label(); lbTen.Text = "Tên sản phẩm";
@@ -135,11 +140,11 @@ namespace PRL
         }
     }
     // Bài tập: Thực hiện thêm nhiều sản phẩm khác nhau vào trong tableLayoutPanel => Phân ra nhiều trang khác nhau
-    public class SanPham
-    {
-        public string Ten { get; set; }
-        public int Gia { get; set; }
-        public int Soluong { get; set; }
-        public string ImgURL { get; set; }
-    }
+    //public class SanPham
+    //{
+    //    public string Ten { get; set; }
+    //    public int Gia { get; set; }
+    //    public int Soluong { get; set; }
+    //    public string ImgURL { get; set; }
+    //}
 }
