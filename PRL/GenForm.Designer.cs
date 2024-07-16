@@ -37,6 +37,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.btn_Mua = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,7 +105,7 @@
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox1.Location = new System.Drawing.Point(332, 268);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(181, 34);
+            this.textBox1.Size = new System.Drawing.Size(83, 34);
             this.textBox1.TabIndex = 4;
             // 
             // label6
@@ -129,11 +130,22 @@
             this.label7.Text = "Số lượng mua";
             this.label7.Click += new System.EventHandler(this.label3_Click);
             // 
+            // btn_Mua
+            // 
+            this.btn_Mua.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_Mua.Location = new System.Drawing.Point(442, 263);
+            this.btn_Mua.Name = "btn_Mua";
+            this.btn_Mua.Size = new System.Drawing.Size(83, 39);
+            this.btn_Mua.TabIndex = 5;
+            this.btn_Mua.Text = "Mua";
+            this.btn_Mua.UseVisualStyleBackColor = true;
+            // 
             // GenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(537, 313);
+            this.Controls.Add(this.btn_Mua);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -162,5 +174,6 @@
         private TextBox textBox1;
         private Label label6;
         private Label label7;
+        private Button btn_Mua;
     }
 }

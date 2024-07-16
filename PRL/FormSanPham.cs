@@ -97,7 +97,7 @@ namespace PRL
                                                // panel này sẽ được thêm vào tablelayoutpanel, // Phương thức này trả về cả 1 Panel
         {
             Panel p = new Panel(); p.Size = new Size(555, 360);
-            p.Name = "ABC";
+            p.Name = sp.Id.ToString(); // gán ID thành tên panel để khi chọn 1 nút trên panel sẽ lấy được ID
             PictureBox ptb = new PictureBox(); ptb.Size = new Size(297, 287);
             ptb.Image = Image.FromFile(sp.Mota); // gán hình ảnh của picturebox = URL ảnh của sản phẩm
             ptb.Location = new Point(14, 12);
@@ -116,9 +116,26 @@ namespace PRL
             lbSLValue.Location = new Point(332, 198);
             Label lbMua = new Label(); lbMua.Text = "Số lượng mua";
             lbMua.Location = new Point(332, 232);
+            Button btnMua = new Button();
+            btnMua.Location = new Point(442, 263);
+            btnMua.Size = new Size(83, 39); btnMua.Text = "MUA";
+            btnMua.MouseClick += BtnMua_MouseClick; // Tạo sự kiện cho nó khi ấn vào nút mua
+
             p.Controls.Add(ptb); p.Controls.Add(lbTen); p.Controls.Add(lbTenValue); p.Controls.Add(lbGia);
             p.Controls.Add(lbGiaValue); p.Controls.Add(lbSL); p.Controls.Add(lbSLValue); p.Controls.Add(lbMua);
+            p.Controls.Add(btnMua);
             return p;
+        }
+
+        private void BtnMua_MouseClick(object? sender, MouseEventArgs e)
+        {
+            // Bước 1 => Xác định đối tượng được tác động là gì?
+            Button b = (Button)sender;  // sender là đối tượng áp dụng cho sự kiện
+            // Bước 2: Xác định Parent (Chính là Panel mà Button đó nằm trên)
+            // Ở đoạn code trên ta đã gán tên panel = id của sản phẩm
+            // => Để lấy được id của sản phẩm cần mua, ta chỉ cần lấy name của panel
+            Panel p = (Panel)b.Parent; // p là panel chứa nút đó
+            MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là "+ p.Name); // Hiển thị tạm ID ra
         }
 
         private void lb_next_Click(object sender, EventArgs e) // tăng trang lên
