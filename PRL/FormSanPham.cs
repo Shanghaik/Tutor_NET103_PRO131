@@ -46,7 +46,7 @@ namespace PRL
             if (page < 1 || page > numberOfPage) return; // nếu số trang vượt quá số trang có => bỏ qua
             else
             { // Lấy số sản phẩm theo số trang 
-                if(page * 4 - 4 < sanphams.Count)
+                if (page * 4 - 4 < sanphams.Count)
                 {
                     Panel s1 = CreatePanelSP(sanphams[page * 4 - 4]);
                     tlp_SanPham.Controls.Add(s1, 0, 0);
@@ -113,6 +113,7 @@ namespace PRL
             Label lbSL = new Label(); lbSL.Text = "Số lượng sản phẩm";
             lbSL.Location = new Point(332, 165);
             Label lbSLValue = new Label(); lbSLValue.Text = sp.Soluong + "";
+            lbSLValue.Name = "Soluong"; // Gán tên để lát lấy data
             lbSLValue.Location = new Point(332, 198);
             Label lbMua = new Label(); lbMua.Text = "Số lượng mua";
             lbMua.Location = new Point(332, 232);
@@ -139,16 +140,20 @@ namespace PRL
             // => Để lấy được id của sản phẩm cần mua, ta chỉ cần lấy name của panel
             Panel p = (Panel)b.Parent; // p là panel chứa nút đó
             TextBox t = p.Controls["tbSoLuong"] as TextBox;
-            MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là "+ p.Name + "Với số lượng là: " + t.Text); // Hiển thị tạm ID ra
+            int soluongmua = Convert.ToInt32(t.Text); // Số lượng nhập vào
+            Label soluong = p.Controls["Soluong"] as Label;
+            int soluongcon = Convert.ToInt32(soluong.Text); // Số lượng 
+            if (soluongmua > soluongcon) MessageBox.Show($"Không thể mua {soluongmua} vì quá {soluongcon} sản phẩm");
+            else MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là " + p.Name + "Với số lượng là: " + t.Text); // Hiển thị tạm ID ra
         }
 
         private void lb_next_Click(object sender, EventArgs e) // tăng trang lên
-        { 
-            if(Convert.ToInt32(lb_page.Text) < (int)Math.Ceiling((decimal)sanphams.Count / 4))
+        {
+            if (Convert.ToInt32(lb_page.Text) < (int) Math.Ceiling((decimal)sanphams.Count / 4))
             { // Nếu trang hiện tại vẫn nhỏ hơn tổ số trang có thể thì ta mới cho Next trang
                 lb_page.Text = Convert.ToInt32(lb_page.Text) + 1 + "";
                 LoadSPToPanel(Convert.ToInt32(lb_page.Text));
-            }        
+            }
         }
 
         private void lb_back_Click(object sender, EventArgs e)
