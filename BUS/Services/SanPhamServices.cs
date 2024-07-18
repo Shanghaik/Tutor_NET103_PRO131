@@ -19,5 +19,13 @@ namespace BUS.Services
         {
             return _repo.GetAll();
         }
+        public string Create(SanPham sanPham)
+        {
+            if (_repo.CreateSP(sanPham))
+            {
+                return "Thêm thành công";
+            }
+            else return "Thêm thất bại";
+        }
     }
 }

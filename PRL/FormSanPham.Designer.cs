@@ -33,6 +33,7 @@
             this.lb_back = new System.Windows.Forms.Label();
             this.lb_next = new System.Windows.Forms.Label();
             this.lb_page = new System.Windows.Forms.Label();
+            this.btn_QLSP = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tlp_SanPham
@@ -89,11 +90,23 @@
             this.lb_page.TabIndex = 4;
             this.lb_page.Text = "1";
             // 
+            // btn_QLSP
+            // 
+            this.btn_QLSP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_QLSP.Location = new System.Drawing.Point(12, 100);
+            this.btn_QLSP.Name = "btn_QLSP";
+            this.btn_QLSP.Size = new System.Drawing.Size(184, 66);
+            this.btn_QLSP.TabIndex = 5;
+            this.btn_QLSP.Text = "Quản lý SP";
+            this.btn_QLSP.UseVisualStyleBackColor = true;
+            this.btn_QLSP.Click += new System.EventHandler(this.btn_QLSP_Click);
+            // 
             // FormSanPham
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1368, 786);
+            this.Controls.Add(this.btn_QLSP);
             this.Controls.Add(this.lb_page);
             this.Controls.Add(this.lb_next);
             this.Controls.Add(this.lb_back);
@@ -113,5 +126,6 @@
         private Label lb_back;
         private Label lb_next;
         private Label lb_page;
+        private Button btn_QLSP;
     }
 }

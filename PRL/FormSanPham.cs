@@ -71,6 +71,7 @@ namespace PRL
         }
         private void btn_ShowSP_Click(object sender, EventArgs e)
         {
+            
             //// Khi click vào đây sẽ load ra 1 sản phẩm với các thuộc tính y như form Gen
             //// Tạo ra 1 đối tượng Sản phẩm mới
             //SanPham sp = new SanPham
@@ -91,6 +92,8 @@ namespace PRL
             //tlp_SanPham.Controls.Add(z, 1, 0);
             //tlp_SanPham.Controls.Add(t, 1, 1);
             tlp_SanPham.Controls.Clear();
+            tlp_SanPham.ColumnCount = 2;
+            tlp_SanPham.RowCount = 2;
             LoadSPToPanel(Convert.ToInt32(lb_page.Text));
         }
         public Panel CreatePanelSP(SanPham sp) // Mỗi sản phẩm sẽ được tạo ra và nằm trong 1 panel,
@@ -163,6 +166,20 @@ namespace PRL
                 lb_page.Text = Convert.ToInt32(lb_page.Text) - 1 + "";
                 LoadSPToPanel(Convert.ToInt32(lb_page.Text));
             }
+        }
+        
+        private void btn_QLSP_Click(object sender, EventArgs e)
+        {
+            tlp_SanPham.Controls.Clear();
+            // Khi click vào đây thì sẽ hiện ra form Quản lý SP trên tableLayoutpanel
+            FormQLSP qlsp = new FormQLSP();
+            qlsp.TopLevel = false;
+            // Thay đổi kích thước TableLayoutPanel thành 1*1 để có thể add cả form QUản lý SP vào
+            tlp_SanPham.ColumnCount = 1;
+            tlp_SanPham.RowCount = 1;
+            tlp_SanPham.Controls.Add(qlsp);
+            qlsp.Show();
+            qlsp.FormBorderStyle = FormBorderStyle.None;
         }
     }
     // Bài tập: Thực hiện thêm nhiều sản phẩm khác nhau vào trong tableLayoutPanel => Phân ra nhiều trang khác nhau
