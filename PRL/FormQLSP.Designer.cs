@@ -57,6 +57,7 @@
             this.dtg_AllSP.RowTemplate.Height = 29;
             this.dtg_AllSP.Size = new System.Drawing.Size(947, 293);
             this.dtg_AllSP.TabIndex = 0;
+            this.dtg_AllSP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg_AllSP_CellClick);
             // 
             // ptb_Mota
             // 

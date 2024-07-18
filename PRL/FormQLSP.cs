@@ -19,6 +19,7 @@ namespace PRL
         {
             _services = new SanPhamServices();
             InitializeComponent();
+            ptb_Mota.SizeMode = PictureBoxSizeMode.StretchImage; // Cấu hình cho picturebox tự fill
         }
 
         private void btn_Them_Click(object sender, EventArgs e)
@@ -58,8 +59,19 @@ namespace PRL
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.ShowDialog();
             string imgURL = dialog.FileName;
-            ptb_Mota.Image = Image.FromFile(imgURL);
-            ptb_Mota.ImageLocation = imgURL;
+            ptb_Mota.Image = Image.FromFile(imgURL); // Gán giá trị
+            ptb_Mota.ImageLocation = imgURL; // Gán value cho đường dẫn
+        }
+
+        private void dtg_AllSP_CellClick(object sender, DataGridViewCellEventArgs e)
+        { // Load data lên form
+            DataGridViewRow row = dtg_AllSP.Rows[e.RowIndex]; // Lấy ra dòng mà mình được chọn
+            tb_Ten.Text = row.Cells[1].Value.ToString();
+            tb_Soluong.Text = row.Cells[2].Value.ToString();
+            tb_Gia.Text = row.Cells[3].Value.ToString();
+            cbb_Trangthai.Text = row.Cells[5].Value.ToString();
+            ptb_Mota.Image = Image.FromFile(row.Cells[4].Value.ToString());
+
         }
     }
 }
