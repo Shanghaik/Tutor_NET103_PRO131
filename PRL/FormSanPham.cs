@@ -30,13 +30,19 @@ namespace PRL
         //    new SanPham {Ten = "SP12", Gia = 10300, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\SK1_GENAI.png"},
         //    new SanPham {Ten = "SP13", Gia = 331000, Soluong = 10, ImgURL = @"C:\Users\Acer\Desktop\Hello.png"}
         //};
+        Guid idNV; // Gán 1 thuộc tính để chứa id nhân viên đăng nhập
         List<SanPham> sanphams; // Tạo ra list SP
         SanPhamServices _services; // Gọi services
-        public FormSanPham()
+        HoaDonServices _hoaDonServices;
+        HDCTServices _hdctServices = new HDCTServices();
+        public int currentBillId = -1;
+        public FormSanPham(Guid idNV)
         {
+            _hoaDonServices = new HoaDonServices();
             _services = new SanPhamServices(); // Thêm cái này
             sanphams = _services.GetAll(); // thêm cả cái này
             InitializeComponent();
+            this.idNV = idNV;
         }
         public void LoadSPToPanel(int page) // Load từng trang sản phẩm vào TableLayoutPanel
         {
@@ -71,7 +77,7 @@ namespace PRL
         }
         private void btn_ShowSP_Click(object sender, EventArgs e)
         {
-            
+
             //// Khi click vào đây sẽ load ra 1 sản phẩm với các thuộc tính y như form Gen
             //// Tạo ra 1 đối tượng Sản phẩm mới
             //SanPham sp = new SanPham
@@ -112,6 +118,7 @@ namespace PRL
             Label lbGia = new Label(); lbGia.Text = "Gia sản phẩm";
             lbGia.Location = new Point(331, 87);
             Label lbGiaValue = new Label(); lbGiaValue.Text = sp.Gia + "";
+            lbGiaValue.Name = "giaban"; //Đặt tên để lát nữa còn lấy ra
             lbGiaValue.Location = new Point(332, 123);
             Label lbSL = new Label(); lbSL.Text = "Số lượng sản phẩm";
             lbSL.Location = new Point(332, 165);
@@ -143,16 +150,31 @@ namespace PRL
             // => Để lấy được id của sản phẩm cần mua, ta chỉ cần lấy name của panel
             Panel p = (Panel)b.Parent; // p là panel chứa nút đó
             TextBox t = p.Controls["tbSoLuong"] as TextBox;
+            Label gia = p.Controls["giaban"] as Label;
             int soluongmua = Convert.ToInt32(t.Text); // Số lượng nhập vào
+            int giaban = Convert.ToInt32(gia.Text);
             Label soluong = p.Controls["Soluong"] as Label;
             int soluongcon = Convert.ToInt32(soluong.Text); // Số lượng 
             if (soluongmua > soluongcon) MessageBox.Show($"Không thể mua {soluongmua} vì quá {soluongcon} sản phẩm");
-            else MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là " + p.Name + "Với số lượng là: " + t.Text); // Hiển thị tạm ID ra
+            else if (currentBillId == -1) MessageBox.Show($"Chưa chọn hóa đơn để mua");
+            else
+            {
+                MessageBox.Show("Bạn vừa chọn mua sản phẩm có id là " + p.Name + "Với số lượng là: " + t.Text
+                + "Vào hóa đơn " + currentBillId); // Hiển thị tạm ID ra
+                                                   // Tạo ra 1 hóa đơn chi tiết tương ứng
+                int Idhd = currentBillId;
+                int Idsp = Convert.ToInt32(p.Name);
+                int Soluong = soluongmua;
+                int Gia = giaban;
+                int Trangthai = 1;
+                _hdctServices.Create(Soluong, Idsp, Idhd, Gia);
+                dtg_HDCT.DataSource = _hdctServices.GetAllByHD(currentBillId);
+            }
         }
 
         private void lb_next_Click(object sender, EventArgs e) // tăng trang lên
         {
-            if (Convert.ToInt32(lb_page.Text) < (int) Math.Ceiling((decimal)sanphams.Count / 4))
+            if (Convert.ToInt32(lb_page.Text) < (int)Math.Ceiling((decimal)sanphams.Count / 4))
             { // Nếu trang hiện tại vẫn nhỏ hơn tổ số trang có thể thì ta mới cho Next trang
                 lb_page.Text = Convert.ToInt32(lb_page.Text) + 1 + "";
                 LoadSPToPanel(Convert.ToInt32(lb_page.Text));
@@ -167,7 +189,7 @@ namespace PRL
                 LoadSPToPanel(Convert.ToInt32(lb_page.Text));
             }
         }
-        
+
         private void btn_QLSP_Click(object sender, EventArgs e)
         {
             tlp_SanPham.Controls.Clear();
@@ -180,6 +202,29 @@ namespace PRL
             tlp_SanPham.Controls.Add(qlsp);
             qlsp.Show();
             qlsp.FormBorderStyle = FormBorderStyle.None;
+        }
+        public void LoadHD()
+        {
+            var allHD = _hoaDonServices.GetAll();
+            dtg_HoaDon.DataSource = allHD;
+
+        }
+        private void btn_TaoHD_Click(object sender, EventArgs e)
+        {
+            _hoaDonServices.Create(idNV, "0987654321");
+            LoadHD();
+        }
+
+        private void dtg_HoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = dtg_HoaDon.Rows[e.RowIndex];
+            currentBillId = (int)row.Cells[0].Value;
+            MessageBox.Show(currentBillId.ToString());
+        }
+
+        private void FormSanPham_Load(object sender, EventArgs e)
+        {
+            LoadHD();
         }
     }
     // Bài tập: Thực hiện thêm nhiều sản phẩm khác nhau vào trong tableLayoutPanel => Phân ra nhiều trang khác nhau

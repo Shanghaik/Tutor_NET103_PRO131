@@ -186,6 +186,7 @@
             this.Btn_Sua.TabIndex = 9;
             this.Btn_Sua.Text = "Sửa";
             this.Btn_Sua.UseVisualStyleBackColor = true;
+            this.Btn_Sua.Click += new System.EventHandler(this.Btn_Sua_Click);
             // 
             // btn_Xoa
             // 

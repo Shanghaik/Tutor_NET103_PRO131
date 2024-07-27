@@ -33,5 +33,26 @@ namespace DAL.Repositories
                 return false;
             }
         }
+        // Sửa sản phẩm
+        public bool UpdateSP(SanPham sp, int id)
+        {
+            try
+            {
+                // Lấy ra đối tượng cần sửa
+                var updateItem = _context.SanPhams.Find(id); // chỉ dùng với khóa chính
+                updateItem.Ten = sp.Ten;
+                updateItem.Mota = sp.Mota;
+                updateItem.Gia = sp.Gia;
+                updateItem.Trangthai = sp.Trangthai;
+                _context.SanPhams.Update(updateItem);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+
+            }
+        }
     }
 }

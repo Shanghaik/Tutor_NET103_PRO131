@@ -27,5 +27,14 @@ namespace BUS.Services
             }
             else return "Thêm thất bại";
         }
+        public string Update(SanPham sanPham, int id)
+        {
+            if (_repo.UpdateSP(sanPham, id))
+            {
+                return "Sửa thành công";
+            }
+            else return "Sửa thất bại";
+        }
+
     }
 }
