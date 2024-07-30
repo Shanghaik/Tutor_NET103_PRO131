@@ -28,5 +28,37 @@ namespace DAL.Repositories
                 return false;
             }
         }
+        public bool UpdateHD(int id, int status)
+        {
+            try
+            {
+                var hd = context.HoaDons.Find(id);
+                hd.Trangthai = status;
+                context.SaveChanges();
+                return true;    
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool DeleteHD(int idhd) // Xóa kèm cả những HDCT của nó nếu không sẽ không thể xóa được
+        {
+            try
+            {
+                var allHDCT = context.Hdcts.Where(p => p.Idhd == idhd); //Lấy ra tất cả HDCT cần xóa kèm
+                context.Hdcts.RemoveRange(allHDCT); // xóa cả 1 lô 1 lốc đi
+                context.SaveChanges();
+                // Bây giờ xong mới đi xóa hóa đơn
+                var hd = context.HoaDons.Find(idhd);
+                context.HoaDons.Remove(hd);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

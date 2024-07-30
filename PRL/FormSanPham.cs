@@ -220,6 +220,9 @@ namespace PRL
             DataGridViewRow row = dtg_HoaDon.Rows[e.RowIndex];
             currentBillId = (int)row.Cells[0].Value;
             MessageBox.Show(currentBillId.ToString());
+            // Khi click vào hóa đon bất kì => Show ra danh sách các hóa đơn chi tiết
+            var allHDCT = _hdctServices.GetAllByHD(currentBillId);
+            dtg_HDCT.DataSource = allHDCT;
         }
 
         private void FormSanPham_Load(object sender, EventArgs e)
