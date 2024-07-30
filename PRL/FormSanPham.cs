@@ -1,5 +1,6 @@
 ﻿using BUS.Services;
 using DAL.Models;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,7 +35,7 @@ namespace PRL
         List<SanPham> sanphams; // Tạo ra list SP
         SanPhamServices _services; // Gọi services
         HoaDonServices _hoaDonServices;
-        HDCTServices _hdctServices = new HDCTServices();
+        HDCTServices _hdctServices;
         public int currentBillId = -1;
         public FormSanPham(Guid idNV)
         {
@@ -46,6 +47,8 @@ namespace PRL
         }
         public void LoadSPToPanel(int page) // Load từng trang sản phẩm vào TableLayoutPanel
         {
+            _services = new SanPhamServices();
+            sanphams = _services.GetAll();
             tlp_SanPham.Controls.Clear();
             int numberOfPage = (int)Math.Ceiling((decimal)sanphams.Count / 4);// số trang ứng theo số lượng sản phẩm
             // Phương thức Ceiling sẽ lấy số nguyên nhỏ nhất lớn hơn hoặc = số thập phân chia ra từ kết quả, vd 13/4 = 3.33333 => 4
@@ -143,6 +146,7 @@ namespace PRL
 
         private void BtnMua_MouseClick(object? sender, MouseEventArgs e)
         {
+            _hdctServices = new HDCTServices();
             // Bước 1 => Xác định đối tượng được tác động là gì?
             Button b = (Button)sender;  // sender là đối tượng áp dụng cho sự kiện
             // Bước 2: Xác định Parent (Chính là Panel mà Button đó nằm trên)
@@ -167,8 +171,15 @@ namespace PRL
                 int Soluong = soluongmua;
                 int Gia = giaban;
                 int Trangthai = 1;
-                _hdctServices.Create(Soluong, Idsp, Idhd, Gia);
-                dtg_HDCT.DataSource = _hdctServices.GetAllByHD(currentBillId);
+               
+                _hdctServices.CheckSPinHD(Idsp, Idhd, Soluong);
+                // dtg_HDCT.DataSource = _hdctServices.GetAllByHD(currentBillId);
+                LoadSPToPanel(1);
+                dtg_HDCT.DataSource = null;
+                HDCTRepos repo = new HDCTRepos();
+                var allHDCT = repo.GetAllByHD(currentBillId);
+                dtg_HDCT.DataSource = allHDCT;
+
             }
         }
 
@@ -217,6 +228,8 @@ namespace PRL
 
         private void dtg_HoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            _hdctServices = new HDCTServices();
+            dtg_HDCT.DataSource = null;
             DataGridViewRow row = dtg_HoaDon.Rows[e.RowIndex];
             currentBillId = (int)row.Cells[0].Value;
             MessageBox.Show(currentBillId.ToString());

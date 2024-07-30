@@ -18,7 +18,7 @@ namespace DAL.Repositories
         {
             return _dbFirstContext.Hdcts.Where(p => p.Idhd == idHD).ToList();
         }
-        public bool CreateHDCT(int soluong, int maSP, int MaHD)
+        public bool CreateHDCT(int soluong, int maHD, int maSP)
         {
             SanPham sp = _dbFirstContext.SanPhams.Find(maSP); // sửa cái này để không lấy data trên form
             Hdct hdct = new Hdct()
@@ -26,7 +26,7 @@ namespace DAL.Repositories
                 Gia = sp.Gia,
                 Soluong = soluong,
                 Idsp = maSP,
-                Idhd = MaHD
+                Idhd = maHD
             };
             try
             {
@@ -47,6 +47,7 @@ namespace DAL.Repositories
             {
                 var hdct = _dbFirstContext.Hdcts.Find(idHDCT); // Lấy cái cần sửa ra
                 hdct.Soluong = soluong + hdct.Soluong; // Update số lượng trong HDCT - chưa validate
+                _dbFirstContext.SaveChanges();
                 // Trừ số lượng sản phẩm trong DB
                 var sp = _dbFirstContext.SanPhams.Find(hdct.Idsp);
                 sp.Soluong = sp.Soluong - soluong;

@@ -13,7 +13,7 @@ namespace BUS.Services
         HDCTRepos repos = new HDCTRepos();
         public HDCTServices()
         {
-
+            repos = new HDCTRepos();
         }
         public List<Hdct> GetAllByHD(int idhd)
         {
@@ -42,7 +42,7 @@ namespace BUS.Services
                 return "thành công";
             }else
             {
-                if (repos.CreateHDCT(soluong, idsp, idhd))
+                if (repos.CreateHDCT(soluong, idhd, idsp))
                 {
                     return "Thành công";
                 }
