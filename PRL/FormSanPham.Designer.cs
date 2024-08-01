@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tlp_SanPham = new System.Windows.Forms.TableLayoutPanel();
             this.btn_ShowSP = new System.Windows.Forms.Button();
             this.lb_back = new System.Windows.Forms.Label();
@@ -35,13 +36,15 @@
             this.lb_page = new System.Windows.Forms.Label();
             this.btn_QLSP = new System.Windows.Forms.Button();
             this.grb_Hoadon = new System.Windows.Forms.GroupBox();
+            this.btn_ThanhToan = new System.Windows.Forms.Button();
             this.lb_idHD = new System.Windows.Forms.Label();
             this.btn_TaoHD = new System.Windows.Forms.Button();
             this.dtg_HoaDon = new System.Windows.Forms.DataGridView();
             this.grb_HDCT = new System.Windows.Forms.GroupBox();
             this.dtg_HDCT = new System.Windows.Forms.DataGridView();
             this.lb_IdNV = new System.Windows.Forms.Label();
-            this.btn_ThanhToan = new System.Windows.Forms.Button();
+            this.lb_Time = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.grb_Hoadon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_HoaDon)).BeginInit();
             this.grb_HDCT.SuspendLayout();
@@ -127,6 +130,17 @@
             this.grb_Hoadon.TabStop = false;
             this.grb_Hoadon.Text = "Hóa đơn";
             // 
+            // btn_ThanhToan
+            // 
+            this.btn_ThanhToan.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_ThanhToan.Location = new System.Drawing.Point(265, 30);
+            this.btn_ThanhToan.Name = "btn_ThanhToan";
+            this.btn_ThanhToan.Size = new System.Drawing.Size(183, 46);
+            this.btn_ThanhToan.TabIndex = 3;
+            this.btn_ThanhToan.Text = "Thanh toán";
+            this.btn_ThanhToan.UseVisualStyleBackColor = true;
+            this.btn_ThanhToan.Click += new System.EventHandler(this.btn_ThanhToan_Click);
+            // 
             // lb_idHD
             // 
             this.lb_idHD.AutoSize = true;
@@ -187,22 +201,26 @@
             this.lb_IdNV.TabIndex = 8;
             this.lb_IdNV.Text = "...";
             // 
-            // btn_ThanhToan
+            // lb_Time
             // 
-            this.btn_ThanhToan.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_ThanhToan.Location = new System.Drawing.Point(265, 30);
-            this.btn_ThanhToan.Name = "btn_ThanhToan";
-            this.btn_ThanhToan.Size = new System.Drawing.Size(183, 46);
-            this.btn_ThanhToan.TabIndex = 3;
-            this.btn_ThanhToan.Text = "Thanh toán";
-            this.btn_ThanhToan.UseVisualStyleBackColor = true;
-            this.btn_ThanhToan.Click += new System.EventHandler(this.btn_ThanhToan_Click);
+            this.lb_Time.AutoSize = true;
+            this.lb_Time.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.lb_Time.Location = new System.Drawing.Point(1296, 754);
+            this.lb_Time.Name = "lb_Time";
+            this.lb_Time.Size = new System.Drawing.Size(72, 31);
+            this.lb_Time.TabIndex = 9;
+            this.lb_Time.Text = "00:00";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // FormSanPham
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1790, 786);
+            this.Controls.Add(this.lb_Time);
             this.Controls.Add(this.lb_IdNV);
             this.Controls.Add(this.grb_HDCT);
             this.Controls.Add(this.grb_Hoadon);
@@ -241,5 +259,7 @@
         private Label lb_IdNV;
         private Label lb_idHD;
         private Button btn_ThanhToan;
+        private Label lb_Time;
+        private System.Windows.Forms.Timer timer1;
     }
 }

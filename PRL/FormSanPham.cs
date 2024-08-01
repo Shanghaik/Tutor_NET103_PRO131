@@ -249,6 +249,7 @@ namespace PRL
         {
             LoadHD();
             lb_IdNV.Text = idNV.ToString();
+            timer1.Start(); // Khi form hiển thị sẽ bắt đầu chạy timer
         }
 
         private void btn_ThanhToan_Click(object sender, EventArgs e)
@@ -259,6 +260,11 @@ namespace PRL
                 MessageBox.Show("Thanh toán thành công");
                 LoadHD();
             }
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Interval = 1000; // Cứ sau 1000 ms = 1 giây thì tái kích hoạt sự kiện (Đếm giây)
+            lb_Time.Text = DateTime.Now.ToString("hh:mm:ss");
         }
     }
     // Bài tập: Thực hiện thêm nhiều sản phẩm khác nhau vào trong tableLayoutPanel => Phân ra nhiều trang khác nhau

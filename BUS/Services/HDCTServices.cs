@@ -65,11 +65,11 @@ namespace BUS.Services
             }
             return sum;
         }
-        public dynamic GetFullHDCT(int idHD)
+        public List<HDCTViewModel> GetFullHDCT(int idHD)
         {
             var hdct = repos.GetAllByHD(idHD);
             var sanpham = spRepos.GetAll();
-            dynamic hdctVM = from p in hdct
+            var hdctVM = from p in hdct
                          join c in sanpham
                          on p.Idsp equals c.Id
                          select
@@ -83,7 +83,7 @@ namespace BUS.Services
                              Trangthai = p.Trangthai,
                              TenSP = c.Ten
                          };
-            return hdctVM;
+            return hdctVM.ToList()  ;
         }
     }
     public class HDCTViewModel
