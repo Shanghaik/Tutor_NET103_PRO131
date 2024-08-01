@@ -11,6 +11,7 @@ namespace BUS.Services
     public class HDCTServices
     {
         HDCTRepos repos = new HDCTRepos();
+        SanPhamRepos spRepos = new SanPhamRepos();
         public HDCTServices()
         {
             repos = new HDCTRepos();
@@ -35,12 +36,13 @@ namespace BUS.Services
             var allhdct = repos.GetAllByHD(idhd); // Lấy tất cả HDCT trong hóa đơn đi đã
             var hdct = allhdct.FirstOrDefault(p => p.Idsp == idsp);
             //return hdct != null; // Nếu nó không null nghĩa là tồn tại rồi => true, nếu chưa có sẽ là fail
-            if(hdct != null) // tồn tại rồi => Ta đi ta update số lượng sản phẩm trong HDCT
+            if (hdct != null) // tồn tại rồi => Ta đi ta update số lượng sản phẩm trong HDCT
             {
                 HDCTRepos repo = new HDCTRepos();
                 repo.UpdateSL(soluong, hdct.Id); // Update luôn trên thành phần vừa được lấy ra
                 return "thành công";
-            }else
+            }
+            else
             {
                 if (repos.CreateHDCT(soluong, idhd, idsp))
                 {
@@ -49,7 +51,7 @@ namespace BUS.Services
                 else
                 {
                     return "Thất bại";
-                } 
+                }
             }
         }
         //Tạo phương thức tính tổng tiền = số sản phẩm trong HDCT * giá của nó (tất cả)
@@ -63,6 +65,35 @@ namespace BUS.Services
             }
             return sum;
         }
-
+        public dynamic GetFullHDCT(int idHD)
+        {
+            var hdct = repos.GetAllByHD(idHD);
+            var sanpham = spRepos.GetAll();
+            dynamic hdctVM = from p in hdct
+                         join c in sanpham
+                         on p.Idsp equals c.Id
+                         select
+                         new HDCTViewModel
+                         {
+                             Id = p.Id,
+                             Idsp = p.Id,
+                             Idhd = p.Idhd,
+                             Gia = p.Gia,
+                             Soluong = p.Soluong,
+                             Trangthai = p.Trangthai,
+                             TenSP = c.Ten
+                         };
+            return hdctVM;
+        }
+    }
+    public class HDCTViewModel
+    {
+        public int Id { get; set; }
+        public int? Idsp { get; set; }
+        public int? Idhd { get; set; }
+        public decimal? Gia { get; set; }
+        public int? Soluong { get; set; }
+        public int? Trangthai { get; set; }
+        public string TenSP { get; set; }
     }
 }

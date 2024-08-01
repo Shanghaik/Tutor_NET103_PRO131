@@ -239,7 +239,8 @@ namespace PRL
             currentBillId = (int)row.Cells[0].Value;
             MessageBox.Show(currentBillId.ToString());
             // Khi click vào hóa đon bất kì => Show ra danh sách các hóa đơn chi tiết
-            var allHDCT = _hdctServices.GetAllByHD(currentBillId);
+            // var allHDCT = _hdctServices.GetAllByHD(currentBillId);
+            var allHDCT = _hdctServices.GetFullHDCT(currentBillId);
             dtg_HDCT.DataSource = allHDCT;
             lb_idHD.Text = currentBillId.ToString();
         }
