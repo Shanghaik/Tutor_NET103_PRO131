@@ -42,6 +42,7 @@ namespace PRL
             _hoaDonServices = new HoaDonServices();
             _services = new SanPhamServices(); // Thêm cái này
             sanphams = _services.GetAll(); // thêm cả cái này
+
             InitializeComponent();
             this.idNV = idNV;
         }
@@ -179,7 +180,11 @@ namespace PRL
                 HDCTRepos repo = new HDCTRepos();
                 var allHDCT = repo.GetAllByHD(currentBillId);
                 dtg_HDCT.DataSource = allHDCT;
-
+                long totalMoney = _hdctServices.CalculateBill(currentBillId);
+                // MessageBox.Show("Tổng tiền hóa đơn là: "+ totalMoney.ToString());
+                _hoaDonServices = new HoaDonServices();
+                MessageBox.Show(_hoaDonServices.Update(currentBillId, 1, totalMoney));
+                LoadHD();
             }
         }
 
@@ -216,7 +221,7 @@ namespace PRL
         }
         public void LoadHD()
         {
-            var allHD = _hoaDonServices.GetAll();
+            var allHD = _hoaDonServices.GetAllNotPaid();
             dtg_HoaDon.DataSource = allHD;
 
         }
@@ -236,11 +241,23 @@ namespace PRL
             // Khi click vào hóa đon bất kì => Show ra danh sách các hóa đơn chi tiết
             var allHDCT = _hdctServices.GetAllByHD(currentBillId);
             dtg_HDCT.DataSource = allHDCT;
+            lb_idHD.Text = currentBillId.ToString();
         }
 
         private void FormSanPham_Load(object sender, EventArgs e)
         {
             LoadHD();
+            lb_IdNV.Text = idNV.ToString();
+        }
+
+        private void btn_ThanhToan_Click(object sender, EventArgs e)
+        {
+            if(currentBillId != null)
+            {
+                _hoaDonServices.Update(currentBillId,0, null);
+                MessageBox.Show("Thanh toán thành công");
+                LoadHD();
+            }
         }
     }
     // Bài tập: Thực hiện thêm nhiều sản phẩm khác nhau vào trong tableLayoutPanel => Phân ra nhiều trang khác nhau

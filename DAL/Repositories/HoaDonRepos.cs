@@ -19,23 +19,27 @@ namespace DAL.Repositories
         {
             try
             {
-                context.HoaDons.Add(hoaDon); 
+                context.HoaDons.Add(hoaDon);
                 context.SaveChanges();
-                return true;    
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
         }
-        public bool UpdateHD(int id, int status)
+        public bool UpdateHD(int id, int status, long? totalMoney)
         {
             try
             {
                 var hd = context.HoaDons.Find(id);
                 hd.Trangthai = status;
+                if (totalMoney != null)
+                {
+                    hd.TongTien = totalMoney;
+                }
                 context.SaveChanges();
-                return true;    
+                return true;
             }
             catch (Exception)
             {

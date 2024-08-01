@@ -18,6 +18,11 @@ namespace BUS.Services
         {
             return repo.GetAll();
         }
+        // Phương thức này để lấy ra tất cả danh sách các hóa đơn chưa thnah toán (có trạng thái là 1)
+        public List<HoaDon> GetAllNotPaid()
+        {
+            return repo.GetAll().Where(p => p.Trangthai == 1).ToList();
+        }
         public string Create(Guid idNV, string idKH)
         {
             HoaDon hoadon = new HoaDon()
@@ -35,5 +40,14 @@ namespace BUS.Services
             }
             else return "Mẹ thành công";
         }
+        public string Update(int idHD, int trangthai, long? totalMoney)
+        {
+            if (repo.UpdateHD(idHD, trangthai, totalMoney))
+            {
+                return "Cập nhật đơn hàng thành công";
+            }
+            else return "Thất bại";
+        }
+
     }
 }

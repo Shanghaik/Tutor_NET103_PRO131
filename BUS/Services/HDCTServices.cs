@@ -52,6 +52,17 @@ namespace BUS.Services
                 } 
             }
         }
+        //Tạo phương thức tính tổng tiền = số sản phẩm trong HDCT * giá của nó (tất cả)
+        public long CalculateBill(int idHD)
+        {
+            List<Hdct> hdcts = repos.GetAllByHD(idHD); // Lấy tất cả HDCT theo ID
+            long sum = 0;
+            foreach (var item in hdcts)
+            {
+                sum += (long)item.Gia * (long)item.Soluong;
+            }
+            return sum;
+        }
 
     }
 }

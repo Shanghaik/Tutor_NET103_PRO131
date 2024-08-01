@@ -35,10 +35,13 @@
             this.lb_page = new System.Windows.Forms.Label();
             this.btn_QLSP = new System.Windows.Forms.Button();
             this.grb_Hoadon = new System.Windows.Forms.GroupBox();
+            this.lb_idHD = new System.Windows.Forms.Label();
             this.btn_TaoHD = new System.Windows.Forms.Button();
             this.dtg_HoaDon = new System.Windows.Forms.DataGridView();
             this.grb_HDCT = new System.Windows.Forms.GroupBox();
             this.dtg_HDCT = new System.Windows.Forms.DataGridView();
+            this.lb_IdNV = new System.Windows.Forms.Label();
+            this.btn_ThanhToan = new System.Windows.Forms.Button();
             this.grb_Hoadon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_HoaDon)).BeginInit();
             this.grb_HDCT.SuspendLayout();
@@ -50,7 +53,7 @@
             this.tlp_SanPham.ColumnCount = 2;
             this.tlp_SanPham.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlp_SanPham.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp_SanPham.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.tlp_SanPham.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.tlp_SanPham.Location = new System.Drawing.Point(160, 17);
             this.tlp_SanPham.Name = "tlp_SanPham";
             this.tlp_SanPham.RowCount = 2;
@@ -113,6 +116,8 @@
             // 
             // grb_Hoadon
             // 
+            this.grb_Hoadon.Controls.Add(this.btn_ThanhToan);
+            this.grb_Hoadon.Controls.Add(this.lb_idHD);
             this.grb_Hoadon.Controls.Add(this.btn_TaoHD);
             this.grb_Hoadon.Controls.Add(this.dtg_HoaDon);
             this.grb_Hoadon.Location = new System.Drawing.Point(1291, 18);
@@ -121,6 +126,15 @@
             this.grb_Hoadon.TabIndex = 6;
             this.grb_Hoadon.TabStop = false;
             this.grb_Hoadon.Text = "Hóa đơn";
+            // 
+            // lb_idHD
+            // 
+            this.lb_idHD.AutoSize = true;
+            this.lb_idHD.Location = new System.Drawing.Point(223, 44);
+            this.lb_idHD.Name = "lb_idHD";
+            this.lb_idHD.Size = new System.Drawing.Size(18, 20);
+            this.lb_idHD.TabIndex = 2;
+            this.lb_idHD.Text = "...";
             // 
             // btn_TaoHD
             // 
@@ -164,11 +178,32 @@
             this.dtg_HDCT.Size = new System.Drawing.Size(427, 326);
             this.dtg_HDCT.TabIndex = 0;
             // 
+            // lb_IdNV
+            // 
+            this.lb_IdNV.AutoSize = true;
+            this.lb_IdNV.Location = new System.Drawing.Point(12, 754);
+            this.lb_IdNV.Name = "lb_IdNV";
+            this.lb_IdNV.Size = new System.Drawing.Size(18, 20);
+            this.lb_IdNV.TabIndex = 8;
+            this.lb_IdNV.Text = "...";
+            // 
+            // btn_ThanhToan
+            // 
+            this.btn_ThanhToan.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_ThanhToan.Location = new System.Drawing.Point(265, 30);
+            this.btn_ThanhToan.Name = "btn_ThanhToan";
+            this.btn_ThanhToan.Size = new System.Drawing.Size(183, 46);
+            this.btn_ThanhToan.TabIndex = 3;
+            this.btn_ThanhToan.Text = "Thanh toán";
+            this.btn_ThanhToan.UseVisualStyleBackColor = true;
+            this.btn_ThanhToan.Click += new System.EventHandler(this.btn_ThanhToan_Click);
+            // 
             // FormSanPham
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1790, 786);
+            this.Controls.Add(this.lb_IdNV);
             this.Controls.Add(this.grb_HDCT);
             this.Controls.Add(this.grb_Hoadon);
             this.Controls.Add(this.btn_QLSP);
@@ -181,6 +216,7 @@
             this.Text = "FormSanPham";
             this.Load += new System.EventHandler(this.FormSanPham_Load);
             this.grb_Hoadon.ResumeLayout(false);
+            this.grb_Hoadon.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_HoaDon)).EndInit();
             this.grb_HDCT.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtg_HDCT)).EndInit();
@@ -202,5 +238,8 @@
         private DataGridView dtg_HoaDon;
         private GroupBox grb_HDCT;
         private DataGridView dtg_HDCT;
+        private Label lb_IdNV;
+        private Label lb_idHD;
+        private Button btn_ThanhToan;
     }
 }
